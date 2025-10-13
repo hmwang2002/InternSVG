@@ -53,5 +53,3 @@ class LPIPSCalculator(BaseMetric):
         return avg_score, values
     
 
-if __name__ == "__main__":
-    calculator = LPIPSCalculator()

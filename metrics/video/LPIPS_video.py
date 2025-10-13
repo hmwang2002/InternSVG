@@ -90,31 +90,3 @@ class LPIPSVideoCalculator(BaseMetric):
             self.meter.update(avg_score, len(values))
         return avg_score, values
 
-
-if __name__ == "__main__":
-    calculator = LPIPSVideoCalculator(num_frames=32, batch_size=32)
-    
-    video2svg_path = "/mnt/petrelfs/share_data/wanghaomin/animation_data/svg_animate_processed/filter_25k/video2svg_animation.jsonl"
-    batch = {}
-    pred_videos = []
-    gt_videos = []
-    captions = []
-    with open(video2svg_path, 'r') as f:
-        lines = f.readlines()
-        for line in lines[:500]:
-            data = json.loads(line)
-            pred_videos.append(data['video'])
-            captions.append(data['conversations'][0]['value'].split("Instruction: ")[1].strip())
-
-        for line in lines[500:1000]:
-            data = json.loads(line)
-            gt_videos.append(data['video'])
-
-    batch = {
-        'pred_video': pred_videos,
-        'gt_video': gt_videos,
-        'caption': captions
-    }
-    
-    avg, values = calculator.calculate_score(batch)
-    print(avg)
