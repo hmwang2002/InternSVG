@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Training
+slurm_outputs/
+outputs/
+tests/
+wandb/
+runs/
+logs/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.hdf5
+*.pb
+events.out.tfevents.*
+
+# Data
+datasets/
+test_data/
+*.zip
+*.tar
+*.gz
+*.tgz
+*.rar
+*.7z
+*.csv
+*.tsv
+*.json
+*.jsonl
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+sarena_ckpt/
+!metrics/video/viclip/bpe_simple_vocab_16e6.txt.gz
+
+# Output
+vis_data/
+logs/
+demo/
+
+rlaunch.sh
+rlaunch_vpn.sh
