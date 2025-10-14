@@ -2,8 +2,8 @@
  <h1> InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models </h1>
 
 <div align="center">
-<a href=''><img src='https://img.shields.io/badge/arXiv-2510.xxxxx-b31b1b?logo=arXiv'></a> &nbsp;&nbsp;&nbsp;&nbsp;
- <a href='https://hmwang2002.github.io/InternSVG/'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;&nbsp;&nbsp;&nbsp;
+<a href='https://arxiv.org/abs/2510.11341'><img src='https://img.shields.io/badge/arXiv-2510.11341-b31b1b?logo=arXiv'></a> &nbsp;&nbsp;&nbsp;&nbsp;
+ <a href='https://hmwang2002.github.io/release/internsvg/'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;&nbsp;&nbsp;&nbsp;
 <a href=""><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Benchmark%20-HF-orange"></a>
 </div>
 
@@ -188,5 +188,13 @@ InternSVG is licensed under the [Apache License 2.0](./LICENSE).
 ## 📖 Citation
 
 ```BibTex
-
+@misc{wang2025internsvgunifiedsvgtasks,
+      title={InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models}, 
+      author={Haomin Wang and Jinhui Yin and Qi Wei and Wenguang Zeng and Lixin Gu and Shenglong Ye and Zhangwei Gao and Yaohui Wang and Yanting Zhang and Yuanqi Li and Yanwen Guo and Wenhai Wang and Kai Chen and Yu Qiao and Hongjie Zhang},
+      year={2025},
+      eprint={2510.11341},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2510.11341}, 
+}
 ```
