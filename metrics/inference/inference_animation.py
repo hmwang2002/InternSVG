@@ -106,7 +106,8 @@ if __name__ == "__main__":
             question = data['conversations'][0]['value']
             svg_path = os.path.join(video2sani_output_path, 'svg', f'{id}.svg')
             if not os.path.exists(svg_path):
-                video2sani_data.append(TestData(id=id, question=question, video_path=data['video'], base_url=base_url, api_key=api_key, model_name=model_name, output_path=video2sani_output_path, max_tokens=max_tokens, retry=retry, timeout=timeout, temperature=temperature))
+                video_path = os.path.join(os.path.dirname(video2sani_test_path), data['video'])
+                video2sani_data.append(TestData(id=id, question=question, video_path=video_path, base_url=base_url, api_key=api_key, model_name=model_name, output_path=video2sani_output_path, max_tokens=max_tokens, retry=retry, timeout=timeout, temperature=temperature))
     
     print("Start processing video2svg data...")
     parallel_map(generate_svg, video2sani_data, max_workers=max_workers)

@@ -107,7 +107,8 @@ if __name__ == "__main__":
             question = data['conversations'][0]['value']
             svg_path = os.path.join(img2svg_output_path, 'svg', f'{id}.svg')
             if not os.path.exists(svg_path):
-                img2svg_data.append(TestData(id=id, question=question, img_path=data['image'], base_url=base_url, api_key=api_key, model_name=model_name, output_path=img2svg_output_path, max_tokens=max_tokens, retry=retry, timeout=timeout, temperature=temperature))
+                image_path = os.path.join(os.path.dirname(img2svg_test_path), data['image'])
+                img2svg_data.append(TestData(id=id, question=question, img_path=image_path, base_url=base_url, api_key=api_key, model_name=model_name, output_path=img2svg_output_path, max_tokens=max_tokens, retry=retry, timeout=timeout, temperature=temperature))
     
     print("Start processing img2svg data...")
     parallel_map(generate_svg, img2svg_data, max_workers=max_workers)

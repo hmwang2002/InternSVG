@@ -4,7 +4,7 @@
 <div align="center">
 <a href='https://arxiv.org/abs/2510.11341'><img src='https://img.shields.io/badge/arXiv-2510.11341-b31b1b?logo=arXiv'></a> &nbsp;&nbsp;&nbsp;&nbsp;
  <a href='https://hmwang2002.github.io/release/internsvg/'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;&nbsp;&nbsp;&nbsp;
-<a href=""><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Benchmark%20-HF-orange"></a>
+<a href="https://huggingface.co/datasets/InternSVG/SArena"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Benchmark%20-HF-orange"></a>
 </div>
 
 <img src="./assets/overview.jpg" width="95%"/>
@@ -20,8 +20,8 @@ We present the **InternSVG family**, an integrated data–benchmark–model suit
 
 ## 🔥 News
 
-- **[2025-10-13]** 🎉 We release the **SArena benchmark**. 🤗[Benchmark](https://huggingface.co/)
-- **[2025-10-13]** 👋 Upload paper and init project. [Read]()
+- **[2025-10-13]** 🎉 We release the **SArena benchmark**. 🤗[Benchmark](https://huggingface.co/datasets/InternSVG/SArena)
+- **[2025-10-13]** 👋 Upload paper and init project. [Read](https://arxiv.org/pdf/2510.11341)
 
 ## 📝 Open-Source Plan
 
@@ -68,7 +68,61 @@ npm install -g svgo
 
 ### Download
 
-TODO
+The **SArena** benchmark is available [here](https://huggingface.co/datasets/InternSVG/SArena). You can use the huggingface_hub command to download directly:
+
+```bash
+hf download InternSVG/SArena SArena.zip --repo-type dataset --resume-download --local-dir PATH_TO_YOUR_DIR
+unzip SArena.zip
+```
+
+After extraction, you will get:
+
+```
+SArena/
+├── animation/
+│   ├── overall/
+│   ├── svg/
+│   ├── video/
+│   ├── text2sani.jsonl
+│   └── video2sani.jsonl
+│
+├── chemistry/
+│   ├── images/
+│   ├── svg/
+│   ├── img2svg.jsonl
+│   └── text2svg.jsonl
+│
+├── illustration/
+│   ├── images/
+│   ├── svg/
+│   ├── caption.jsonl
+│   ├── img2svg.jsonl
+│   └── text2svg.jsonl
+│
+├── Icon/
+│   ├── edit/
+│   │   └── data/
+│   │       ├── color_complex.jsonl
+│   │       ├── color_simple.jsonl
+│   │       ├── crop.jsonl
+│   │       ├── flip.jsonl
+│   │       ├── opacity.jsonl
+│   │       ├── outline.jsonl
+│   │       ├── rotate.jsonl
+│   │       ├── scale.jsonl
+│   │       ├── styletransform_openmoji.jsonl
+│   │       └── translate.jsonl
+│   │
+│   ├── generation/
+│   │   ├── images/
+│   │   ├── svg/
+│   │   ├── caption.jsonl
+│   │   ├── img2svg.jsonl
+│   │   └── text2svg.jsonl
+│   │
+│   └── understanding/
+│       └── sarena_un.jsonl
+```
 
 ### Inference
 
