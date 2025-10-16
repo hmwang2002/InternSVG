@@ -242,13 +242,10 @@ InternSVG is licensed under the [Apache License 2.0](./LICENSE).
 ## 📖 Citation
 
 ```BibTex
-@misc{wang2025internsvgunifiedsvgtasks,
-      title={InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models}, 
-      author={Haomin Wang and Jinhui Yin and Qi Wei and Wenguang Zeng and Lixin Gu and Shenglong Ye and Zhangwei Gao and Yaohui Wang and Yanting Zhang and Yuanqi Li and Yanwen Guo and Wenhai Wang and Kai Chen and Yu Qiao and Hongjie Zhang},
-      year={2025},
-      eprint={2510.11341},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2510.11341}, 
+@article{wang2025internsvg,
+  title={InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models},
+  author={Wang, Haomin and Yin, Jinhui and Wei, Qi and Zeng, Wenguang and Gu, Lixin and Ye, Shenglong and Gao, Zhangwei and Wang, Yaohui and Zhang, Yanting and Li, Yuanqi and others},
+  journal={arXiv preprint arXiv:2510.11341},
+  year={2025}
 }
 ```
