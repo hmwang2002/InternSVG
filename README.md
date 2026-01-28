@@ -1,13 +1,17 @@
 <div align="center">
- <h1> InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models </h1>
+ <h1> [ICLR 2026] InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models </h1>
+
 
 <div align="center">
 <a href='https://arxiv.org/abs/2510.11341'><img src='https://img.shields.io/badge/arXiv-2510.11341-b31b1b?logo=arXiv'></a> &nbsp;&nbsp;&nbsp;&nbsp;
  <a href='https://hmwang2002.github.io/release/internsvg/'><img src='https://img.shields.io/badge/Project-Page-Green'></a> &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="https://huggingface.co/datasets/InternSVG/SArena"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Benchmark%20-HF-orange"></a>
+<a href="https://huggingface.co/datasets/InternSVG/SArena"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Benchmark%20-HF-orange"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://huggingface.co/datasets/InternSVG/SAgoge"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset%20-HF-orange"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://huggingface.co/InternSVG/InternSVG-8B"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model%20-HF-orange"></a>
 </div>
 
-<img src="./assets/overview.jpg" width="95%"/>
+
+<img src="/assets/overview.jpg" width="95%"/>
 </div>
 
 ## 📚 Introduction
@@ -20,6 +24,9 @@ We present the **InternSVG family**, an integrated data–benchmark–model suit
 
 ## 🔥 News
 
+- **[2026-01-28]** 🎉 **InternSVG-8B** is now available on HuggingFace! 🤗[Model](https://huggingface.co/InternSVG/InternSVG-8B)
+- **[2026-01-28]** 🎉 We release the **SAgoge dataset**. 🤗[Dataset](https://huggingface.co/datasets/InternSVG/SAgoge)
+- **[2026-01-26]** 🎉 **InternSVG** has been accepted at **ICLR 2026**!
 - **[2025-10-13]** 🎉 We release the **SArena benchmark**. 🤗[Benchmark](https://huggingface.co/datasets/InternSVG/SArena)
 - **[2025-10-13]** 👋 Upload paper and init project. [Read](https://arxiv.org/pdf/2510.11341)
 
@@ -27,12 +34,13 @@ We present the **InternSVG family**, an integrated data–benchmark–model suit
 
  - [x] Evaluation code
  - [x] SArena benchmark
- - [ ] SAgoge dataset
- - [ ] Fine-tuning scripts
- - [ ] Model weights
+ - [x] SAgoge dataset
+ - [x] Fine-tuning scripts
+ - [x] Model weights
  - [x] Paper
 
 ## 📌 Quick Start
+
 ### ⚙️ Installation
 
 ```bash
@@ -57,12 +65,119 @@ huggingface-cli download --resume-download OpenGVLab/ViCLIP ViClip-InternVid-10M
 cd ..
 ```
 
+For training, you need to install LLaMA-Factory.
+
+```bash
+pip install deepspeed==0.16.9
+pip install av==14.4.0
+cd LLaMA-Factory
+pip install -e ".[torch,metrics]"
+cd ..
+```
+
 (Optional) If you need to simplify your own SVG code, install svgo.
 
 ```bash
 conda install nodejs
 npm install -g svgo
 ```
+
+## **🤖 InternSVG Model** 
+
+The **InternSVG-8B** model is available at [Hugging Face](https://huggingface.co/InternSVG/InternSVG-8B). It is based on the InternVL3-8B model, incorporating SVG-specific tokens, and undergoes Supervised Fine-Tuning (SFT) under a two-stage training strategy using the massive SVG training samples from the SAgoge dataset. 
+
+### Deploy
+
+We recommend using [LMDeploy](https://github.com/InternLM/lmdeploy) for deployment. An example of launching a proxy server with 8 parallel workers (one per GPU) is provided below:
+
+```bash
+#!/bin/bash
+model_path="MODEL_PATH"
+model_name="InternSVG"
+
+# proxy
+lmdeploy serve proxy --server-name 0.0.0.0 --server-port 10010 --routing-strategy "min_expected_latency" &
+
+worker_num=8
+for ((i = 0; i < worker_num; i++)); do
+    timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+    CUDA_VISIBLE_DEVICES="${i}" lmdeploy serve api_server ${model_path} --proxy-url http://0.0.0.0:10010 \
+        --model-name ${model_name} \
+        --tp 1 \
+        --max-batch-size 512 \
+        --backend pytorch \
+        --server-port $((10000 + i)) \
+        --session-len 16384 \
+        --chat-template "internvl2_5" \
+        --log-level WARNING &>> ./logs/api_${model_name}_${timestamp}_${i}.out  &
+    sleep 10s
+done
+```
+
+### Train
+
+If you need to train your own model, please follow these steps:
+
+1. **Prepare the Dataset:** Download the **SAgoge** dataset. After that, update the paths for the SAgoge-related subdatasets in `LLaMA-Factory/data/dataset_info.json` to match your local file paths.
+2. **Download InternVL3-8B:** Download the InternVL3-8B from [link](https://huggingface.co/OpenGVLab/InternVL3-8B-hf).
+3. **Add Special Tokens:** Before training, you must add SVG-specific tokens to the base model. Run the `utils/add_token.py` script, which adds these special tokens to the original model weights and initializes their embeddings based on subwords.
+4. **Start Training:** We provide example configuration scripts for the two-stage training process. You can find them at:
+    - **Stage 1:** `LLaMA-Factory/examples/train_full/stage_1.yaml`
+    - **Stage 2:** `LLaMA-Factory/examples/train_full/stage_2.yaml`
+
+    Then use `llamafactory-cli train` to start training.
+
+## 🧩 SAgoge Dataset
+
+The **SAgoge** dataset is available at [Hugging Face](https://huggingface.co/datasets/InternSVG/SAgoge). To use SAgoge, please download the dataset and extract *media.tar.gz* to access the image files. After extraction, you will get:
+
+```
+SAgoge/
+├── media/
+│   ├── stage1/
+│   │   ├── chem/
+│   │   └── icon/
+│   └── stage2/
+│       ├── animation/
+│       ├── chem/
+│       ├── icon/
+│       └── illustration/
+├── stage1/
+│   ├── chem/
+│   │   ├── img2svg/
+│   │   └── text2svg/
+│   └── icon/
+│       ├── edit/
+│       ├── generation/
+│       │   ├── img2svg/
+│       │   └── text2svg/
+│       └── understanding/
+└── stage2/
+    ├── animation/
+    │   ├── text2sani/
+    │   └── video2sani/
+    ├── chem/
+    │   ├── img2svg/
+    │   └── text2svg/
+    ├── icon/
+    │   ├── edit/
+    │   ├── generation/
+    │   │   ├── img2svg/
+    │   │   └── text2svg/
+    │   └── understanding/
+    └── illustration/
+        ├── img2svg/
+        └── text2svg/
+```
+
+Statistics of **SAgoge**:
+
+| **Dataset**  | **#SVGs** | **#Samples** | **Avg. Tokens** |
+| ------------ | --------- | ------------ | --------------- |
+| Icon         | 2.8M      | 11M          | 846             |
+| Illustration | 600K      | 1.6M         | 8673            |
+| Animation    | 61K       | 122K         | 847             |
+| Chemistry    | 1.7M      | 3.4M         | 1752            |
 
 ## 📊 SArena Benchmark
 
@@ -203,6 +318,7 @@ scripts/evaluate/
 ```
 
 Below is a demo for evaluating generation tasks (Text-to-SVG and Image-to-SVG):
+
 ```bash
 #!/bin/bash
 export PYTHONPATH=$(pwd):$PYTHONPATH
@@ -233,7 +349,7 @@ We also acknowledge the following open-source efforts that have contributed to a
 - [StarVector](https://github.com/joanrod/star-vector)
 - [LLM4SVG](https://github.com/ximinng/LLM4SVG)
 - [OmniSVG](https://github.com/OmniSVG/OmniSVG)
- 
+
 
 ## License
 

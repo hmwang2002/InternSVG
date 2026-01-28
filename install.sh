@@ -15,3 +15,10 @@ cd ..
 # install svgo
 conda install nodejs
 npm install -g svgo
+
+# For training
+pip install deepspeed==0.16.9
+pip install av==14.4.0
+cd LLaMA-Factory
+pip install -e ".[torch,metrics]"
+cd ..

@@ -30,7 +30,6 @@ def _count_chars_file(path: Union[str, Path]) -> Tuple[str, int]:
     return p.name, len(text)
 
 def _copy_file(args: Tuple[Path, Path]) -> str:
-    """多进程辅助函数：复制单个文件"""
     source_file, target_file = args
     shutil.copy2(source_file, target_file)
     return source_file.name
@@ -303,7 +302,7 @@ class TokenCounter:
         
     def filter_svg_by_length(self, dir_path: str, output_path: str, min_length: int = 0, max_length: int = 25000, fastmode: bool = False, save_metadata: bool = False) -> Dict[str, int]:
         """
-        Filter out SVG files less than or equal to the specified length, and copy to the output path.
+        Filter out SVG files with length in [min_length, max_length], and copy to the output path.
         
         :param dir_path: Input directory path containing SVG files
         :param output_path: Output directory path, will be created if it does not exist

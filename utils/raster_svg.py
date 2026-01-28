@@ -29,11 +29,3 @@ def raster_svg(input_data: InputData):
     except Exception as e:
         print(f"Error rastering {input_data.svg_path}: {e}")
 
-
-if __name__ == "__main__":
-    svg_dir = '/mnt/shared-storage-user/intern7shared/wanghaomin/InternSVG-Data/illustration_test/img2svg/svg'
-    output_dir = '/mnt/shared-storage-user/intern7shared/SVG/InternSVG-Data/illustration_test/img2svg/images-test'
-    os.makedirs(output_dir, exist_ok=True)
-    input_data_list = [InputData(svg_path=os.path.join(svg_dir, file_name), output_dir=output_dir, width=448, height=448) for file_name in os.listdir(svg_dir)]
-    parallel_map(raster_svg, input_data_list, max_workers=128)
-    

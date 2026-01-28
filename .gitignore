@@ -75,3 +75,7 @@ demo/
 
 rlaunch.sh
 rlaunch_vpn.sh
+rjob.sh
+
+tools/
+workspace/

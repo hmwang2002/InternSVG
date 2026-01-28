@@ -1,0 +1,54 @@
+model_name_or_path: PATH_TO_MODEL
+trust_remote_code: true
+
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: false
+freeze_multi_modal_projector: false
+freeze_language_model: false
+deepspeed: examples/deepspeed/ds_z1_config.json
+resume_from_checkpoint: null
+flash_attn: fa2
+
+dataset: stage2_animation_video2sani,stage2_chem_img2svg,stage2_icon_img2svg,stage2_illustration_img2svg,stage2_animation_text2sani,stage2_chem_text2svg,stage2_icon_text2svg,stage2_illustration_text2svg,stage2_icon_edit,stage2_icon_understanding
+dataset_dir: data
+media_dir: PATH_TO_MEDIA_DIR
+template: intern_vl
+max_samples: 300000000
+cutoff_len: 16384
+overwrite_cache: false
+preprocessing_num_workers: 128
+dataloader_num_workers: 8
+tokenized_path: PATH_TO_TOKENIZED_PATH
+
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 4
+learning_rate: 0.0001
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+bf16: true
+fp16: false
+ddp_timeout: 180000000
+# group_by_length: true
+# group_by_length: true
+# length_column_name: length 
+
+output_dir: PATH_TO_OUTPUT_DIR
+
+logging_steps: 10
+save_steps: 2500
+save_total_limit: 3
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+
+### generation
+max_length: 4096
+max_new_tokens: 4096
+
+report_to: tensorboard
+
+val_size: 0
+eval_strategy: "no"
