@@ -337,6 +337,18 @@ python evaluate_gen.py \
 
 If your model does not support either the Text-to-SVG or Image-to-SVG task, simply set the corresponding test directory argument (--text2svg_test_dir or --img2svg_test_dir) to an empty string.
 
+### Note on the SArena-Icon Score Reported by Intern-S1-Pro
+
+![intern-s1-pro](./assets/interns1-pro.jpeg)
+
+We thank the Intern-S1-Pro team for treating SVG generation as an important capability of the model, and for using SArena-Icon as a benchmark for evaluation.
+
+To better align with the common practice in general-purpose foundation model technical reports (i.e., reporting results in a 0 – 100 scale), we additionally report a single aggregated score for SArena-Icon, computed from the original SArena metrics.
+
+We define the final score as:
+
+final score = 0.3 * CLIP-I2I + 0.3 * (100 * DINO) + 0.2 * (100 * SSIM) + 0.2 * (100 * (1 - LPIPS))
+
 ## 📜 Acknowledgements
 
 We would like to thank [Kiyotaka](https://github.com/hmwang2002), [yinlikestudy](https://github.com/yinlikestudy), and [quentin-77](https://github.com/quentin-77) for their valuable contributions to this project.
