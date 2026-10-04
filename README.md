@@ -370,10 +370,12 @@ InternSVG is licensed under the [Apache License 2.0](./LICENSE).
 ## 📖 Citation
 
 ```BibTex
-@article{wang2025internsvg,
-  title={InternSVG: Towards Unified SVG Tasks with Multimodal Large Language Models},
+@inproceedings{wang2026internsvg,
+  title={Internsvg: Towards unified svg tasks with multimodal large language models},
   author={Wang, Haomin and Yin, Jinhui and Wei, Qi and Zeng, Wenguang and Gu, Lixin and Ye, Shenglong and Gao, Zhangwei and Wang, Yaohui and Zhang, Yanting and Li, Yuanqi and others},
-  journal={arXiv preprint arXiv:2510.11341},
-  year={2025}
+  booktitle={International Conference on Learning Representations},
+  volume={2026},
+  pages={38649--38705},
+  year={2026}
 }
 ```
