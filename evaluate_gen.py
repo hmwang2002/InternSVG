@@ -63,6 +63,7 @@ def evaluate(test_dir: str, tokenizer_path: str, task: str, test_file_path: str,
     if bench_name == 'Illustration' and task == 'text2svg':
         reference_dir = os.path.join(os.path.dirname(test_file_path), 'text2svg_references')
         gt_img_dir = os.path.join(reference_dir, 'images')
+        gt_svg_dir = os.path.join(reference_dir, 'svg')
         caption_path = os.path.join(reference_dir, 'caption.jsonl')
 
     if bench_name != 'Chem' and len(caption_path) > 0:
