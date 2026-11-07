@@ -1,6 +1,7 @@
 import os
 import json
 import argparse
+import torch
 
 from PIL import Image
 from metrics.metrics import MetricsConfig, InternSVGMetrics
@@ -57,7 +58,13 @@ def load_config(bench_name: str, task: str):
     else:
         raise ValueError(f'Invalid task: {task}')
 
+@torch.inference_mode()
 def evaluate(test_dir: str, tokenizer_path: str, task: str, test_file_path: str, gt_img_dir: str, gt_svg_dir: str, bench_name: str, caption_path: str):
+    if bench_name == 'Illustration' and task == 'text2svg':
+        reference_dir = os.path.join(os.path.dirname(test_file_path), 'text2svg_references')
+        gt_img_dir = os.path.join(reference_dir, 'images')
+        caption_path = os.path.join(reference_dir, 'caption.jsonl')
+
     if bench_name != 'Chem' and len(caption_path) > 0:
         caption_dict = {}
         with open(caption_path, 'r') as f:
