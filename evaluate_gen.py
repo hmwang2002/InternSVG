@@ -66,7 +66,8 @@ def evaluate(test_dir: str, tokenizer_path: str, task: str, test_file_path: str,
         gt_svg_dir = os.path.join(reference_dir, 'svg')
         caption_path = os.path.join(reference_dir, 'caption.jsonl')
 
-    if bench_name != 'Chem' and len(caption_path) > 0:
+    use_captions = task == 'text2svg' and bench_name != 'Chem' and len(caption_path) > 0
+    if use_captions:
         caption_dict = {}
         with open(caption_path, 'r') as f:
             lines = f.readlines()
@@ -102,7 +103,7 @@ def evaluate(test_dir: str, tokenizer_path: str, task: str, test_file_path: str,
             gt_svg_path = os.path.join(gt_svg_dir, f'{id}.svg')
             gt_svg_paths.append(gt_svg_path)
 
-            if bench_name != 'Chem' and len(caption_path) > 0:
+            if use_captions:
                 gt_img_name = os.path.basename(gt_img_path)
                 caption.append(caption_dict[gt_img_name])
 
@@ -131,7 +132,7 @@ def evaluate(test_dir: str, tokenizer_path: str, task: str, test_file_path: str,
     success_rate = valid_preds / total_samples
     print(f'success rate: {success_rate:.4%}')
 
-    if bench_name == 'Chem' or len(caption_path) == 0:
+    if not use_captions:
         batch = {
             'gt_im': gt_imgs,
             'pred_im': pred_imgs,
